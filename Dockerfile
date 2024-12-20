@@ -1,6 +1,6 @@
 ARG DEBIANVERSION=bullseye
 
-FROM debian:${DEBIANVERSION}-slim as debian-backports-updated
+FROM debian:${DEBIANVERSION}-slim AS debian-backports-updated
 
 ENV DEBIAN_VERSION=bullseye
 
@@ -53,7 +53,7 @@ RUN \
       dnsutils \
       telnet \
       curl \
-      vim \ 
+      vim \
       jq \
       postfix \
       sasl2-bin && \
