@@ -34,7 +34,7 @@ smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
 
 
 smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
-myhostname = 3e7ab985eb30
+myhostname = localhost
 alias_maps = hash:/etc/aliases
 local_recipient_maps =
 alias_database = hash:/etc/aliases
@@ -46,4 +46,4 @@ mailbox_size_limit = 0
 recipient_delimiter = +
 inet_interfaces = all
 inet_protocols = all
-mailbox_transport = cyrus
+mailbox_transport = lmtp:unix:/var/lib/cyrus/socket/lmtp

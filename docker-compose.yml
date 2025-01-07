@@ -17,7 +17,7 @@ services:
       - "465:465"
       - "587:587"
     volumes:
-      # - ./cyrus/imapd.conf:/etc/imapd.conf
+      - ./cyrus/imapd.conf:/etc/imapd.conf
       - ./cyrus/saslauthd:/etc/default/saslauthd
       - ./cyrus/cyrus.conf:/etc/cyrus.conf
       - ./postfix/:/etc/postfix/

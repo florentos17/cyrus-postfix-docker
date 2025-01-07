@@ -83,6 +83,8 @@ RUN echo 'defaultdomain: localhost.com' >> /etc/imapd.conf
 
 RUN /usr/lib/cyrus/bin/ctl_conversationsdb -b -r
 
+RUN usermod -aG mail postfix
+
 ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz /tmp
 ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-x86_64.tar.xz /tmp
 ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/syslogd-overlay-noarch.tar.xz /tmp
