@@ -1,13 +1,12 @@
-ARG DEBIANVERSION=bookworm
+ARG DEBIANVERSION=unstable
 
 FROM debian:${DEBIANVERSION}-slim AS debian-backports-updated
 
-ENV DEBIAN_VERSION=bookworm
+ENV DEBIAN_VERSION=unstable
 
 RUN echo "# Install packages from ${DEBIAN_VERSION}" && \
     apt-get -y update && \
     apt-get -y dist-upgrade && \
-    echo "deb http://deb.debian.org/debian" ${DEBIAN_VERSION}"-backports main" > /etc/apt/sources.list.d/backports.list && \
     apt-get -y update
 
 FROM debian-backports-updated
@@ -43,12 +42,12 @@ RUN \
     echo postfix postfix/root_address string "$ROOT_ADDRESS" | debconf-set-selections && \
     echo postfix postfix/newaliases boolean false | debconf-set-selections && \
     apt install -y xz-utils \
-      cyrus-imapd/${DEBIAN_VERSION}-backports \
-      cyrus-pop3d/${DEBIAN_VERSION}-backports \
-      cyrus-nntpd/${DEBIAN_VERSION}-backports \
-      cyrus-admin/${DEBIAN_VERSION}-backports \
-      cyrus-caldav/${DEBIAN_VERSION}-backports \
-      libcyrus-imap-perl/${DEBIAN_VERSION}-backports \
+      cyrus-imapd \
+      cyrus-pop3d \
+      cyrus-nntpd \
+      cyrus-admin \
+      cyrus-caldav \
+      libcyrus-imap-perl \
       net-tools \
       dnsutils \
       telnet \
@@ -88,6 +87,7 @@ RUN usermod -aG mail postfix
 ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz /tmp
 ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-x86_64.tar.xz /tmp
 ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/syslogd-overlay-noarch.tar.xz /tmp
+
 RUN tar -C / -Jxpf /tmp/s6-overlay-noarch.tar.xz && rm /tmp/s6-overlay-noarch.tar.xz && \
     tar -C / -Jxpf /tmp/s6-overlay-x86_64.tar.xz && rm /tmp/s6-overlay-x86_64.tar.xz && \
     tar -C / -Jxpf /tmp/syslogd-overlay-noarch.tar.xz && rm /tmp/syslogd-overlay-noarch.tar.xz
